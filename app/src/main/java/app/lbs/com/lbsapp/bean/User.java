@@ -33,6 +33,7 @@ public class User {
      * 驾驶证号
      */
     private String driverLicense;
+    private String sjh;
 
     public Long getId() {
         return id;
@@ -81,4 +82,7 @@ public class User {
     public void setDriverLicense(String driverLicense) {
         this.driverLicense = driverLicense;
     }
+
+    public String getSjh() {return sjh;}
+
 }

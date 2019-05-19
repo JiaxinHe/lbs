@@ -329,4 +329,17 @@
     <color name="black">#000000</color>
     <!-- 黑色 -->
 
+    <color name="bg_grey">#f2f2f2</color>
+    <color name="layout_title">#008EEF</color>
+    <color name="system_bar_bg">#008EEF</color>
+
+    <color name="list_item_title">#333333</color>
+    <color name="list_item_desc">#666666</color>
+    <color name="list_divide_line">#E1E1E1</color>
+    <color name="list_bg">#F6F6F6</color>
+
+    <color name="cancel_bg">#F4F4F4</color>
+    <color name="sure_bg">#0084FE</color>
+    <color name="dialog_title">#323232</color>
+    <color name="light_gray">#F8F8F8</color>
 </resources>

@@ -19,7 +19,8 @@ public interface Constant {
     String INSURANCE_INFO = HOST + "personal/insurance";
     String LIMIT_CITY = HOST + "limit/city";
     String LIMIT = HOST + "limit";
-    String ACCIDENT = HOST + "accident";
+    String ACCIDENT = HOST + "personal/accident";
+    String LIMIT_CHECK = HOST + "remind/limit";
 
     String HOSPITAL_PHONE = "15060123639";
 }

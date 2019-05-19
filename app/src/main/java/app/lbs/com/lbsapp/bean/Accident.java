@@ -1,9 +1,12 @@
 package app.lbs.com.lbsapp.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 事故记录
  */
-public class Accident {
+public class Accident implements Parcelable {
     /**
      * 事故ID
      */
@@ -94,4 +97,45 @@ public class Accident {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeValue(this.id);
+        dest.writeValue(this.userId);
+        dest.writeString(this.time);
+        dest.writeValue(this.lat);
+        dest.writeValue(this.lng);
+        dest.writeString(this.address);
+        dest.writeString(this.description);
+    }
+
+    public Accident() {
+    }
+
+    protected Accident(Parcel in) {
+        this.id = (Long) in.readValue(Long.class.getClassLoader());
+        this.userId = (Long) in.readValue(Long.class.getClassLoader());
+        this.time = in.readString();
+        this.lat = (Float) in.readValue(Float.class.getClassLoader());
+        this.lng = (Float) in.readValue(Float.class.getClassLoader());
+        this.address = in.readString();
+        this.description = in.readString();
+    }
+
+    public static final Parcelable.Creator<Accident> CREATOR = new Parcelable.Creator<Accident>() {
+        @Override
+        public Accident createFromParcel(Parcel source) {
+            return new Accident(source);
+        }
+
+        @Override
+        public Accident[] newArray(int size) {
+            return new Accident[size];
+        }
+    };
 }

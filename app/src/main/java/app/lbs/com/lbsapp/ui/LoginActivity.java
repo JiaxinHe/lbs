@@ -87,12 +87,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void initToolBar() {
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-        mToolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
 
@@ -141,7 +135,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             SharedPreferencesUtil.saveStringValue(LoginActivity.this, "token", loginResult.getToken());
                             SharedPreferencesUtil.saveLongValue(LoginActivity.this, "userId", loginResult.getUserId());
                             SharedPreferencesUtil.saveStringValue(LoginActivity.this, "username", userName);
-                            finish();
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(intent);
                         } else {
                             SharedPreferencesUtil.saveStringValue(LoginActivity.this, "token", "");
                             SharedPreferencesUtil.saveStringValue(LoginActivity.this, "username", "");

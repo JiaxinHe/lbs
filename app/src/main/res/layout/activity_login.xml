@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/layout_action_toolbar_more" />
+    <include layout="@layout/layout_action_toolbar_no_back" />
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -1,9 +1,13 @@
 package app.lbs.com.lbsapp.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ListView;
+import android.view.View;
+import android.widget.AbsListView;
+import android.widget.AdapterView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -21,6 +25,8 @@ import app.lbs.com.lbsapp.api.NetUtils;
 import app.lbs.com.lbsapp.bean.Accident;
 import app.lbs.com.lbsapp.bean.ResultDTO;
 import app.lbs.com.lbsapp.utils.SharedPreferencesUtil;
+import app.lbs.com.lbsapp.utils.TimeTransUtils;
+import app.lbs.com.lbsapp.widget.MyListView;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
@@ -31,7 +37,8 @@ import okhttp3.Response;
 public class AccidentActivity extends AppCompatActivity {
     private AccidentAdapter accidentAdapter;
     private List<Accident> accidentList = new ArrayList<>();
-    private ListView listView;
+    private MyListView listView;
+    private TextView tagTv;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +46,33 @@ public class AccidentActivity extends AppCompatActivity {
         setContentView(R.layout.activity_accident);
         accidentAdapter = new AccidentAdapter(this, R.layout.item_accident, accidentList);
         listView = findViewById(R.id.list_accident);
+        tagTv = findViewById(R.id.tv_tag);
         listView.setAdapter(accidentAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Accident accident = accidentList.get(i);
+                Intent intent = new Intent(AccidentActivity.this,AccidentDetailActivity.class);
+                intent.putExtra("accident",accident);
+                startActivity(intent);
+            }
+
+        });
+        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView absListView, int i) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView absListView, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                //监听第一个可见的
+                if (firstVisibleItem < accidentList.size()) {
+                    Accident accident = accidentList.get(firstVisibleItem);
+                    tagTv.setText(TimeTransUtils.strToDateLong(accident.getTime()));
+                }
+            }
+        });
         getData();
     }
 
@@ -65,7 +98,13 @@ public class AccidentActivity extends AppCompatActivity {
                 ResultDTO<List<Accident>> resultDTO = gson.fromJson(json, type);
                 if (resultDTO.getStatus() == 0) {
                     accidentList.clear();
-                    accidentList.addAll(resultDTO.getResult());
+                    List<Accident> list = resultDTO.getResult();
+                    if (list != null) {
+                        for (int i = 0; i < list.size(); i++) {
+                            accidentList.add(list.get(i));
+                        }
+                    }
+//                    accidentList.addAll(resultDTO.getResult());
 
                     runOnUiThread(new Runnable() {
                         @Override

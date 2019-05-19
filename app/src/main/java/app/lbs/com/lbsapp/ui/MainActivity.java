@@ -1,6 +1,13 @@
 package app.lbs.com.lbsapp.ui;
 
+import android.Manifest;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -12,28 +19,39 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.baidu.mapapi.SDKInitializer;
+
 import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
 
 import app.lbs.com.lbsapp.R;
+import app.lbs.com.lbsapp.TrackApplication;
+import app.lbs.com.lbsapp.utils.BitmapUtil;
 import app.lbs.com.lbsapp.utils.SharedPreferencesUtil;
+
+import static app.lbs.com.lbsapp.utils.BitmapUtil.init;
 
 /**
  * 主界面
  */
-public class MainActivity extends AppCompatActivity
+public class  MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
     private ImageView headerImg;
     private TextView nameTv;
     private TextView titleTv;
     private MenuItem menuItem;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         titleTv = findViewById(R.id.tv_action_title);
@@ -57,7 +75,9 @@ public class MainActivity extends AppCompatActivity
         Menu menuView = navigationView.getMenu();
         menuItem = menuView.getItem(7);
         navigationView.setNavigationItemSelectedListener(this);
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -221,6 +241,7 @@ public class MainActivity extends AppCompatActivity
         startActivity(intent);
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -242,4 +263,5 @@ public class MainActivity extends AppCompatActivity
             }
         });
     }
+
 }
